@@ -6,13 +6,11 @@ import sys
 
 alph = []
 
-
 def calc_difference(freq1, freq2):
     dif = 0
     for i in alph:
         dif += (freq1[i] - freq2[i]) ** 2
     return dif
-
 
 def fill_alph():
     for i in string.ascii_letters:
@@ -22,30 +20,29 @@ def fill_alph():
     for i in range(1040, 1104):
         alph.append(chr(i))
 
-
 def calc_frequency(text):
     amount = sum(text.count(i) for i in alph)
     frequency = {}
     for i in alph:
         frequency[i] = text.count(i) / amount
     return frequency
-
-
-def encode_caesar(text, key):
+        
+def code_caesar(text, key, flag):
     key = int(key)
     newtext = ''
     for i in text:
         if i in alph:
-            ind = (alph.index(i) + key) % len(alph)
+            ind = (alph.index(i) + flag * key) % len(alph)
             newtext += alph[ind]
         else:
             newtext += i
     return newtext
 
-
 def decode_caesar(text, key):
-    return encode_caesar(text, -key)
+    return code_caesar(text, key, -1)
 
+def encode_caesar(text, key):
+    return code_caesar(text, key, 1)
 
 def code_vigenere(text, key, flag):
     newtext = ''
@@ -58,14 +55,11 @@ def code_vigenere(text, key, flag):
             newtext += text[i]
     return newtext
 
-
 def decode_vigenere(text, key):
-    return code_vigenere(text, key, -1)
-
+    return code_vigenere(text, key, -1)       
 
 def encode_vigenere(text, key):
-    return code_vigenere(text, key, 1)
-
+    return code_vigenere(text, key, 1) 
 
 def hack_caesar(text, frequency):
     min_d = 100000000
@@ -78,7 +72,6 @@ def hack_caesar(text, frequency):
             min_d = d
             ans_shift = shift
     return encode_caesar(text, ans_shift)
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument('mode')
@@ -115,7 +108,7 @@ else:
         result = eval(args.mode + '_' + args.cipher + '(text, frequency)')
     if args.output_file:
         with open(args.output_file, 'w', encoding='utf-8') as f:
-            print(result, file=f)
+            print(result, file=f, end = '')
     else:
-        print(result)
+        print(result, end = '')
 
