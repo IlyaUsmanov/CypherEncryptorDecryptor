@@ -38,9 +38,8 @@ def create_output(args, text):
         else:
             print(result)
     else:
-        function = args.cipher + '.' + args.cipher[0].upper() + args.cipher[1:] + '.' + args.mode
+        function = '.'.join([args.cipher, args.cipher.capitalize(), args.mode])
         if args.mode in ('encode', 'decode'):
-            
             result = eval(function + '(text, args.key)')
         else:
             with open(args.frequency_file, 'r', encoding='utf-8') as f:
@@ -51,6 +50,7 @@ def create_output(args, text):
                 print(result, file=f, end='')
         else:
             print(result, end='')
+
 
 def main():
     args, text = parse_input()
