@@ -34,4 +34,3 @@ class Caesar:
                 min_d = d
                 ans_shift = shift
         return Caesar.encode(text, ans_shift)
- 
