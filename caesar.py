@@ -2,7 +2,7 @@ import tools
 
 
 class Caesar:
-    
+
     def __do(text, key, flag):
         alphabet = tools.get_alphabet()
         key = int(key)
@@ -15,14 +15,11 @@ class Caesar:
                 newtext += letter
         return newtext
 
-    
     def decode(text, key):
         return Caesar.__do(text, key, -1)
 
-
     def encode(text, key):
         return Caesar.__do(text, key, 1)
-
 
     def hack(text, frequency):
         alphabet = tools.get_alphabet()
@@ -37,5 +34,3 @@ class Caesar:
                 min_d = d
                 ans_shift = shift
         return Caesar.encode(text, ans_shift)
-
-
