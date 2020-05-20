@@ -29,7 +29,6 @@ class Caesar:
             newtext = Caesar.encode(text, shift)
             temp_freq = tools.calc_frequency(newtext)
             d = tools.calc_difference(frequency, temp_freq)
-            print(d, newtext)
             if d <= min_d:
                 min_d = d
                 ans_shift = shift
