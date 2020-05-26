@@ -20,8 +20,8 @@ def parse_input():
     if not args.input_file:
         print('Enter your text')
         text = ''
-        for i in sys.stdin:
-            text += i
+        for line in sys.stdin:
+            text += line
     else:
         with open(args.input_file, 'r', encoding='utf-8') as f:
             text = f.read()
