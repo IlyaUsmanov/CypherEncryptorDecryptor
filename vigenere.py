@@ -4,12 +4,13 @@ import tools
 class Vigenere:
 
     def __do(text, key, flag):
-        alphabet = tools.get_alphabet()
+        alphabet = tools.Alphabet.alphabet
+        alphabet_dict = tools.Alphabet.alphabet_dict
         newtext = ''
         for i in range(len(text)):
-            if text[i] in alphabet:
-                key_ind = alphabet.index(key[i % len(key)])
-                shift = alphabet.index(text[i]) + flag * key_ind
+            if text[i] in alphabet_dict:
+                key_ind = alphabet_dict[key[i % len(key)]]
+                shift = alphabet_dict[text[i]] + flag * key_ind
                 ind = shift % len(alphabet)
                 newtext += alphabet[ind]
             else:
