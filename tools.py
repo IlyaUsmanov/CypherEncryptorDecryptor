@@ -1,6 +1,7 @@
 import string
 from collections import Counter
 
+
 class Alphabet:
     @staticmethod
     def get_alphabet_dict():
@@ -10,6 +11,7 @@ class Alphabet:
         for letter in string.punctuation:
             alphabet_dict[letter] = len(alphabet_dict)
         return alphabet_dict
+
     @staticmethod
     def get_alphabet():
         alphabet = []
