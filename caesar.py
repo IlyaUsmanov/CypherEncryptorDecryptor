@@ -1,35 +1,37 @@
-import tools
+from tools import Alphabet, calc_frequency, calc_difference, shift_frequency
 
 
 class Caesar:
 
-    def __do(text, key, flag):
-        alphabet = tools.Alphabet.alphabet
-        alphabet_dict = tools.Alphabet.alphabet_dict
+    @staticmethod
+    def __do_encode_or_decode(text, key, flag):
         key = int(key)
-        newtext = ''
+        result = []
         for letter in text:
-            if letter in alphabet_dict:
-                ind = (alphabet_dict[letter] + flag * key) % len(alphabet)
-                newtext += alphabet[ind]
+            if letter in Alphabet.alphabet_dict:
+                ind = (Alphabet.alphabet_dict[letter] + flag * key) % len(Alphabet.alphabet)
+                result.append(Alphabet.alphabet[ind])
             else:
-                newtext += letter
-        return newtext
+                result.append(letter)
+        return ''.join(result)
 
-    def decode(text, key):
-        return Caesar.__do(text, key, -1)
+    @classmethod
+    def decode(cls, text, key):
+        return Caesar.__do_encode_or_decode(text, key, -1)
 
-    def encode(text, key):
-        return Caesar.__do(text, key, 1)
+    @classmethod
+    def encode(cls, text, key):
+        return Caesar.__do_encode_or_decode(text, key, 1)
 
-    def hack(text, frequency):
-        alphabet = tools.Alphabet.alphabet
-        min_difference = len(text)
-        ans_shift = -1
-        for shift in range(len(alphabet)):
-            newtext = Caesar.encode(text, shift)
-            temp_freq = tools.calc_frequency(newtext)
-            difference = tools.calc_difference(frequency, temp_freq)
+    @classmethod
+    def hack(cls, text, frequency):
+        base_frequency = calc_frequency(text)
+        min_difference = calc_difference(base_frequency, frequency)
+        ans_shift = 0
+
+        for shift in range(1, len(Alphabet.alphabet)):
+            temp_freq = shift_frequency(base_frequency, shift)
+            difference = calc_difference(frequency, temp_freq)
             if difference <= min_difference:
                 min_difference = difference
                 ans_shift = shift

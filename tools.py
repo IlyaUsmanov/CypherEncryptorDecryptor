@@ -3,40 +3,32 @@ from collections import Counter
 
 
 class Alphabet:
-    @staticmethod
-    def get_alphabet_dict():
-        alphabet_dict = dict()
-        for letter in string.ascii_letters:
-            alphabet_dict[letter] = len(alphabet_dict)
-        for letter in string.punctuation:
-            alphabet_dict[letter] = len(alphabet_dict)
-        return alphabet_dict
 
     @staticmethod
     def get_alphabet():
-        alphabet = []
-        for letter in string.ascii_letters:
-            alphabet.append(letter)
-        for letter in string.punctuation:
-            alphabet.append(letter)
-        return alphabet
+        return string.ascii_letters + string.punctuation
+
     alphabet = get_alphabet.__func__()
-    alphabet_dict = get_alphabet_dict.__func__()
+
+    alphabet_dict = {letter: index for index, letter in enumerate(alphabet)}
 
 
 def calc_difference(frequency1, frequency2):
-    alphabet = Alphabet.alphabet
     dif = 0
-    for letter in alphabet:
+    for letter in Alphabet.alphabet:
         dif += (frequency1[letter] - frequency2[letter]) ** 2
     return dif
 
 
 def calc_frequency(text):
-    alphabet = Alphabet.alphabet
     counter = Counter(text)
-    amount = sum(counter[letter] for letter in alphabet)
-    frequency = {}
-    for letter in alphabet:
-        frequency[letter] = counter[letter] / amount
-    return frequency
+    amount = sum(counter[letter] for letter in Alphabet.alphabet)
+    return {letter: counter[letter] / amount for letter in Alphabet.alphabet}
+
+
+def shift_letter(letter, shift):
+    return Alphabet.alphabet[(Alphabet.alphabet_dict[letter] + shift) % len(Alphabet.alphabet)]
+
+
+def shift_frequency(frequencies, shift):
+    return {shift_letter(letter, shift): frequency for letter, frequency in frequencies.items()}

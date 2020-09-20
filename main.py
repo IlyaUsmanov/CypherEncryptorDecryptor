@@ -2,8 +2,8 @@ import string
 import json
 import argparse
 import sys
-import caesar
-import vigenere
+from caesar import Caesar
+from vigenere import Vigenere
 import tools
 
 
@@ -19,12 +19,10 @@ def parse_input():
 
     if not args.input_file:
         print('Enter your text')
-        text = ''
-        for line in sys.stdin:
-            text += line
+        text = sys.stdin.read()
     else:
-        with open(args.input_file, 'r', encoding='utf-8') as f:
-            text = f.read()
+        with open(args.input_file, 'r', encoding='utf-8') as input_file:
+            text = input_file.read()
 
     return (args, text)
 
@@ -33,21 +31,29 @@ def create_output(args, text):
     if args.mode == 'frequency':
         result = tools.calc_frequency(text)
         if args.output_file:
-            with open(args.output_file, 'w', encoding='utf-8') as f:
-                json.dump(result, f)
+            with open(args.output_file, 'w', encoding='utf-8') as output_file:
+                json.dump(result, output_file)
         else:
             print(result)
     else:
-        function = '.'.join([args.cipher, args.cipher.capitalize(), args.mode])
-        if args.mode in ('encode', 'decode'):
-            result = eval(function + '(text, args.key)')
+        if args.mode == 'encode':
+            if args.cipher == 'caesar':
+                result = Caesar.encode(text, args.key)
+            else:
+                result = Vigenere.encode(text, args.key)
+        elif args.mode == 'decode':
+            if args.cipher == 'caesar':
+                result = Caesar.decode(text, args.key)
+            else:
+                result = Vigenere.decode(text, args.key)
         else:
-            with open(args.frequency_file, 'r', encoding='utf-8') as f:
-                frequency = json.load(f)
-            result = eval(function + '(text, frequency)')
+            with open(args.frequency_file, 'r', encoding='utf-8') as frequency_file:
+                frequency = json.load(frequency_file)
+            result = Caesar.hack(text, frequency)
+
         if args.output_file:
-            with open(args.output_file, 'w', encoding='utf-8') as f:
-                print(result, file=f, end='')
+            with open(args.output_file, 'w', encoding='utf-8') as output_file:
+                print(result, file=output_file, end='')
         else:
             print(result, end='')
 

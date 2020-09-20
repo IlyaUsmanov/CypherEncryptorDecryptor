@@ -1,24 +1,25 @@
-import tools
+from tools import Alphabet
 
 
 class Vigenere:
 
-    def __do(text, key, flag):
-        alphabet = tools.Alphabet.alphabet
-        alphabet_dict = tools.Alphabet.alphabet_dict
-        newtext = ''
-        for i in range(len(text)):
-            if text[i] in alphabet_dict:
-                key_ind = alphabet_dict[key[i % len(key)]]
-                shift = alphabet_dict[text[i]] + flag * key_ind
-                ind = shift % len(alphabet)
-                newtext += alphabet[ind]
+    @staticmethod
+    def __do_encode_or_decode(text, key, flag):
+        result = []
+        for index, letter in enumerate(text):
+            if letter in Alphabet.alphabet_dict:
+                key_ind = Alphabet.alphabet_dict[key[index % len(key)]]
+                shift = Alphabet.alphabet_dict[letter] + flag * key_ind
+                ind = shift % len(Alphabet.alphabet)
+                result.append(Alphabet.alphabet[ind])
             else:
-                newtext += text[i]
-        return newtext
+                result.append(letter)
+        return ''.join(result)
 
-    def decode(text, key):
-        return Vigenere.__do(text, key, -1)
+    @classmethod
+    def decode(cls, text, key):
+        return Vigenere.__do_encode_or_decode(text, key, -1)
 
-    def encode(text, key):
-        return Vigenere.__do(text, key, 1)
+    @classmethod
+    def encode(cls, text, key):
+        return Vigenere.__do_encode_or_decode(text, key, 1)
