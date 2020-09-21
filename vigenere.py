@@ -18,8 +18,8 @@ class Vigenere:
 
     @classmethod
     def decode(cls, text, key):
-        return Vigenere.__do_encode_or_decode(text, key, -1)
+        return cls.__do_encode_or_decode(text, key, -1)
 
     @classmethod
     def encode(cls, text, key):
-        return Vigenere.__do_encode_or_decode(text, key, 1)
+        return cls.__do_encode_or_decode(text, key, 1)

@@ -4,11 +4,7 @@ from collections import Counter
 
 class Alphabet:
 
-    @staticmethod
-    def get_alphabet():
-        return string.ascii_letters + string.punctuation
-
-    alphabet = get_alphabet.__func__()
+    alphabet = string.ascii_letters + string.punctuation
 
     alphabet_dict = {letter: index for index, letter in enumerate(alphabet)}
 

@@ -1,4 +1,4 @@
-from tools import Alphabet, calc_frequency, calc_difference, shift_frequency
+from tools import Alphabet, calc_frequency, calc_difference, shift_frequency, shift_letter
 
 
 class Caesar:
@@ -9,19 +9,18 @@ class Caesar:
         result = []
         for letter in text:
             if letter in Alphabet.alphabet_dict:
-                ind = (Alphabet.alphabet_dict[letter] + flag * key) % len(Alphabet.alphabet)
-                result.append(Alphabet.alphabet[ind])
+                result.append(shift_letter(letter, flag * key))
             else:
                 result.append(letter)
         return ''.join(result)
 
     @classmethod
     def decode(cls, text, key):
-        return Caesar.__do_encode_or_decode(text, key, -1)
+        return cls.__do_encode_or_decode(text, key, -1)
 
     @classmethod
     def encode(cls, text, key):
-        return Caesar.__do_encode_or_decode(text, key, 1)
+        return cls.__do_encode_or_decode(text, key, 1)
 
     @classmethod
     def hack(cls, text, frequency):
@@ -35,4 +34,4 @@ class Caesar:
             if difference <= min_difference:
                 min_difference = difference
                 ans_shift = shift
-        return Caesar.encode(text, ans_shift)
+        return cls.encode(text, ans_shift)
