@@ -1,19 +1,19 @@
-# Шифрование
+# Cypher
 
-# Работает в 4 режимах, поддерживает 2 шифра, без бонусов
-# Примеры запуска для каждого из режимов:
-## Зашифровать:
-### Цезарь:
+# Works in 4 modes, supports 2 ciphers
+# Examples of launching for each of the modes:
+## Encrypt:
+### Caesar:
 `python3 main.py encode --input_file input.txt --output_file output.txt --cipher caesar --key 2`
-### Виженер:
+### Vigenere:
 `python3 main.py encode --input_file input.txt --output_file output.txt --cipher vigenere --key lemon`
-## Дешифровать:
-### Цезарь:
+## Decrypt:
+### Caesar:
 `python3 main.py decode --input_file input.txt --output_file output.txt --cipher caesar --key 2`
-### Виженер:
+### Vigenere:
 `python3 main.py decode --input_file input.txt --output_file output.txt --cipher vigenere --key lemon`
-## Посчитать частотность символов в тексте:
+## Calculate the frequency of characters in the text:
 `python3 main.py frequency --input_file input.txt --output_file output.json`
-## Взломать шифр:
-### Цезарь:
+## Hack cypher:
+### Caesar:
 `python3 main.py hack --input_file input.txt --output_file output.txt --cipher caesar --frequency_file frequency.json`
